@@ -1,0 +1,17 @@
+version: "3.8"
+
+volumes:
+  mc_users:
+
+services:
+  user_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=user_db
+    volumes:
+      - mc_users:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
