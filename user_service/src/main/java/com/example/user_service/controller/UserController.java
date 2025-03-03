@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PostMapping()
+    @PostMapping(consumes = "application/json")
     @Operation(description = "Add new user")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userMapper.toDto(userService.addUser(userRequestDto));
@@ -31,14 +31,14 @@ public class UserController {
     @Operation(description = "Get user by id")
     public ResponseEntity<?> getUserById(@PathVariable(name = "userId") Long userId) {
         UserResponseDto userResponseDto = userMapper.toDto(userService.getUserById(userId));
-        return ResponseEntity.status(HttpStatus.FOUND).body(userResponseDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
     @GetMapping()
     @Operation(description = "Get all users")
     public ResponseEntity<?> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         List<UserResponseDto> responseUsers = userMapper.toDtos(userService.getAllUsers(page,size));
-        return ResponseEntity.status(HttpStatus.FOUND).body(responseUsers);
+        return ResponseEntity.status(HttpStatus.OK).body(responseUsers);
     }
 
     @DeleteMapping("/{userId}")
