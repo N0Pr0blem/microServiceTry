@@ -15,3 +15,18 @@ services:
       - mc_users:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      - user_db
+    environment:
+      SPRING_DATA_SOURCE_URL: 'jdbc:postgresql://user_db:5432/user_db'
+      SPRING_DATA_SOURCE_USERNAME: 'root'
+      SPRING_DATA_SOURCE_PASSWORD: 'root'
+      SPRING_FLYWAY_URL: 'jdbc:postgresql://user_db:5432/user_db'
+      SPRING_FLYWAY_USER: 'root'
+      SPRING_FLYWAY_PASSWORD: 'root'
+      JAVA_OPTS: '-Xmx512m'
